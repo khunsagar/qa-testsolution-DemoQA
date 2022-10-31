@@ -1,0 +1,38 @@
+{
+"user_details":
+{
+    "first_name": "Alden",
+    "last_name": "Cantrell",
+    "email": "test@test.com",
+    "age": "30",
+    "salary": "12345",
+    "department": "QA"
+},
+
+"edit_details":
+{
+    "first_name": "Gerimedica",
+    "last_name": "BV"
+},
+"user_form_details":
+{
+    "first_name": "Gerimedica",
+    "last_name": "BV",
+    "email": "test@test.com",
+    "month":0,
+    "phone":"0123456789",
+    "gender":"Male",
+    "year": "1990",
+    "date":"15",
+    "subject":"Accounting",
+    "hobby":"Reading",
+    "address":"Netherlands",
+    "state":"NCR",
+    "city":"Delhi",
+    "date_title":"January 1990",
+    "complete_date":"15 January,1990",
+    "calender_title":"15 Jan 1990"
+
+}
+
+}

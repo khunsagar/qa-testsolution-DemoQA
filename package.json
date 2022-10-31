@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "faker": "^6.6.6",
+    "node": "^19.0.0"
+  },
+  "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.1",
+    "@faker-js/faker": "^7.6.0",
+    "cypress": "^10.11.0",
+    "cypress-file-upload": "^5.0.8",
+    "eslint-plugin-cypress": "^2.12.1"
+  }
+}
