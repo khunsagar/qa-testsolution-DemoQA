@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
 const data = require('../../fixtures/bookdetail.json');
+import * as API_REG from '../api/registeruser';
 
 export function addBookError()
 {
@@ -28,58 +29,70 @@ export function addBookError()
       })
 }
 
-
-export function addAndRemoveBookSuccess()
+export function addAndRemoveBookSuccess(ISBN)
 {
-  cy.generateToken(Cypress.env('USERNAME'),Cypress.env('PASSWORD')).then(($responce) =>{
+  cy.getCookie('token').then(($token) => {
+  const token = $token.value;
+  cy.log(token)
+  
+  cy.getCookie('userID').then(($id) => {
+    const userId = $id.value;
+    cy.log(userId)
+
     cy.request({
        method: 'POST',
        url: Cypress.env('BOOK_STORE'),
 
        body: 
          {
-           'userId': Cypress.env('USERID'),
+           'userId': userId,
            "collectionOfIsbns": [
              {
-               "isbn": data.books.isbn
+               "isbn": ISBN
              }
            ],
          },
        headers: {
          'accept': 'application/json',
          'Content-Type': 'application/json',
-         Authorization: `Bearer ${Cypress.env('TOKEN')}`,
+          Authorization: 'Bearer '+token,
        }
      }).then((responce)=>{
       expect(responce.status).to.eq(201);
-      expect(responce.body.books[0].isbn).to.be.eq(data.books.isbn)
-    }).then(()=>{
-      removeBookSuccess();
+      expect(responce.body.books[0].isbn).to.be.eq(ISBN)
     })
+  })
 })
 }
 
-export function removeBookSuccess()
+export function removeBookSuccess(ISBN)
 {
+  cy.getCookie('token').then(($token) => {
+    const token = $token.value; 
+    cy.log("token remove :",token)
+    cy.getCookie('userID').then(($id) => {
+      const userId = $id.value;
+      cy.log("remove book ", userId)
     cy.request({
         method: 'DELETE',
-        url: Cypress.env('BOOK_STORE'),
+        url: Cypress.env('BOOK_STORE_DELETE')
+        ,
         body: 
          {
-           "isbn": data.books.isbn,
-           "userId":  Cypress.env('USERID'),
-           "message": data.books.title
+           userId: userId,
+           isbn: ISBN,
          },
     
         headers: {
-          accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${Cypress.env('TOKEN')}`,
+          Authorization: 'Bearer '+token,
         }
       }).then((resp)=>{
         expect(resp.status).to.eq(204);
         
       })
+    })
+  })
+  
 }
 
 export function removeBookErrorCheck()

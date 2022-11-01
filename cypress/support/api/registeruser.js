@@ -16,14 +16,17 @@ export function registerUserSuccess(password)
           'Content-Type': 'application/json'
 
         }
-      }).then((responce)=>{
-        expect(responce.status).to.eq(201)
-        expect(responce.isOkStatusCode).to.be.true
-        cy.log(JSON.stringify(responce.body))
-        expect(responce.body).has.property("userID")
-        expect(responce.body).has.property("username")
-        expect(responce.body).has.property("books")
-        Cypress.env('USERID',responce.body.userID)
+      }).then($responce =>{
+        expect($responce.status).to.eq(201)
+        expect($responce.isOkStatusCode).to.be.true
+        cy.log(JSON.stringify($responce.body))
+        expect($responce.body).has.property("userID")
+        expect($responce.body).has.property("username")
+        expect($responce.body).has.property("books")
+        cy.setCookie('userName', $responce.body.username);
+        Cypress.env('USERID',$responce.body.userID)
+        cy.log(JSON.stringify($responce.body.userID))
+        cy.setCookie('userID',$responce.body.userID);
       })
 }
 export function registerUserError()

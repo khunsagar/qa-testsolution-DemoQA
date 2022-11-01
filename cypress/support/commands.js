@@ -51,13 +51,13 @@ Cypress.Commands.add('clickElementWithText', (pagelocator,text) => {
     cy.get('.card-body>h5').contains(text).click();
 });
 
-Cypress.Commands.add('generateToken',(username) => {
+Cypress.Commands.add('generateToken',() => {
      return cy.request({
         method: 'POST',
         url: Cypress.env('GENERATETOKEN'),
         body: 
                   {
-                    "userName": username,
+                    "userName": Cypress.env('USERNAME'),
                     "password": Cypress.env('PASSWORD')
                   },
               
@@ -68,6 +68,7 @@ Cypress.Commands.add('generateToken',(username) => {
     }).then((token) =>{
             Cypress.env('TOKEN',token.body.token)
             cy.log('TOKEN command ',token.body.token)
+            cy.setCookie('token', token.body.token);
         })
 });
 
